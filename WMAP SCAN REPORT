@@ -1,0 +1,92 @@
+==================== WMAP SCAN REPORT ====================
+Target IP        : 192.168.60.129
+Environment      : Metasploitable 2 (Purposefully Vulnerable VM)
+Scan Module      : wmap (Metasploit Web Scanner)
+Scan Initiated   : 2025‑11‑30 18:40 IST
+Scan Completed   : 2025‑11‑30 18:43 IST
+========================================================
+
+[+] Service Discovery
+    PORT    STATE  SERVICE     VERSION
+    80/tcp  open   http        Apache httpd 2.2.8 (Ubuntu)
+    21/tcp  open   ftp         vsftpd 2.3.4
+    22/tcp  open   ssh         OpenSSH 4.7p1 Debian
+    23/tcp  open   telnet      Linux telnetd
+    3306/tcp open  mysql       MySQL 5.0.51a
+
+========================================================
+
+[+] Crawled URLs
+    /
+    /phpinfo.php
+    /mutillidae/
+    /mutillidae/index.php
+    /mutillidae/page=user‑info.php
+    /mutillidae/page=dns‑lookup.php
+    /dvwa/
+    /dvwa/login.php
+    /dav/
+    /test/
+    /uploads/
+    /robots.txt
+
+========================================================
+
+[!] Vulnerability Findings
+--------------------------------------------------------
+
+→ SQL Injection (Reflected Error)
+    Path Tested      : /mutillidae/index.php?page=user‑info.php&id=
+    Payload Used     : ' OR 1=1 --
+    Response         : MySQL error reflected
+    Risk Level       : HIGH
+    Status           : Possible injection point
+
+→ Cross Site Scripting (Reflected)
+    Parameter        : target_host
+    Payload          : <script>alert(1)</script>
+    Result           : Reflected in HTTP response
+    Risk Level       : MEDIUM
+    Status           : Reflected XSS confirmed
+
+→ WebDAV PUT Method Enabled
+    Path             : /dav/
+    Result           : PUT method allowed
+    Risk Level       : MEDIUM
+    Status           : File upload may be possible
+
+→ PHP Configuration Exposure
+    File Found       : /phpinfo.php
+    Result           : Full PHP system info leaked
+    Risk Level       : HIGH
+    Status           : Publicly accessible
+
+→ Weak MySQL Credentials Detected
+    Username Tested  : root
+    Password Tested  : (blank)
+    Result           : Login allowed
+    Risk Level       : CRITICAL
+    Status           : Unauthorized DB access possible
+
+========================================================
+
+[+] Vulnerability Summary
+    • SQL Injection Possible      – HIGH
+    • Reflected XSS               – MEDIUM
+    • WebDAV PUT Enabled          – MEDIUM
+    • PHP Info Disclosure         – HIGH
+    • MySQL root login (no pass)  – CRITICAL
+
+========================================================
+
+[+] Recommendations
+✔ Remove or restrict access to phpinfo.php
+✔ Apply input sanitization and parameter validation
+✔ Disable PUT method if WebDAV is not required
+✔ Enforce strong MySQL authentication
+✔ Deploy Web Application Firewall (WAF) rules
+✔ Monitor logs using SIEM or IDS for attack traces
+
+========================================================
+Scan Status : Completed Successfully
+==================== END OF REPORT =====================
