@@ -1,0 +1,95 @@
+=============== WMAP SCAN REPORT =================
+Scan Target        : 192.168.60.129
+Scan Tool          : WMAP (Metasploit Module)
+Scan Date & Time   : 2025-11-30 18:25 IST
+Tester             : Alisha Sharma
+==================================================
+
+[+] Web Server Information
+    • HTTP Service Detected on Port : 80
+    • Server Header Response       : Apache/2.2.8 (Ubuntu DAV/2)
+    • Web Application Type        : PHP
+    • CMS Detected                : None
+    • robots.txt Found            : Yes
+
+[+] Backend Services
+    • MySQL Database Port (3306)  : Open
+    • SSH Port (22)               : Open
+    • FTP Port (21)               : Open
+
+==================================================
+
+[+] Discovered URLs
+    http://192.168.60.129/
+    http://192.168.60.129/phpinfo.php
+    http://192.168.60.129/login
+    http://192.168.60.129/admin
+    http://192.168.60.129/robots.txt
+
+==================================================
+
+[!] Vulnerability Scan Results
+
+→ SQL Injection (Possible)
+    • Parameter Tested  : id
+    • Payload Used      : ' OR '1'='1
+    • Error Response    : SQL Error page reflected in output
+    • Risk Level        : HIGH
+
+→ Cross Site Scripting (Reflected XSS)
+    • Parameter Tested  : q
+    • Payload Used      : <script>alert(1)</script>
+    • Payload Reflected : Yes
+    • Risk Level        : MEDIUM
+
+→ Directory Listing Enabled
+    • Path              : /uploads/
+    • Result            : Accessible with file index
+    • Risk Level        : LOW
+
+→ HTTP PUT Method Enabled
+    • Result            : WebDAV upload may be possible
+    • Risk Level        : MEDIUM
+
+→ Sensitive Information Exposure
+    • File Found        : phpinfo.php
+    • Result            : Reveals system and PHP configuration
+    • Risk Level        : HIGH
+
+==================================================
+
+[+] File Scan Results
+    • Configuration Files Exposed : No
+    • Backup Files Found          : No
+    • .git Directory Found        : No
+
+==================================================
+
+[+] Vulnerability Summary
+
+| Vulnerability                  | Risk |
+|------------------------------|------|
+| SQL Injection                | HIGH |
+| PHP Info Exposure            | HIGH |
+| HTTP PUT/WebDAV Enabled       | MEDIUM |
+| Reflected XSS                | MEDIUM |
+| Directory Listing (/uploads) | LOW  |
+
+==================================================
+
+[+] Recommendations
+
+✔ Disable robots.txt sensitive path exposure  
+✔ Remove or restrict access to phpinfo.php  
+✔ Turn off Directory Listing on web server  
+✔ Sanitize user inputs to prevent SQLi and XSS  
+✔ Disable unnecessary HTTP methods like PUT  
+
+==================================================
+
+[+] Conclusion
+The web application hosted on 192.168.60.129 shows multiple security
+misconfigurations and possible injection vulnerabilities. These could lead to
+database compromise, cross‑site scripting attacks, and server information leakage.
+
+=============== END OF REPORT ===================
